@@ -156,7 +156,6 @@ class HomeScreen extends StatelessWidget {
                 _buildInfoCard('Account Type', _getRoleDescription(user.role), Icons.info_outlined),
 
                 SizedBox(height: 32),
-
                 
               ],
             ),
@@ -236,6 +235,25 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 SizedBox(height: 8),
+                
+                // Profile menu item (for all roles)
+                ListTile(
+                  leading: Icon(Icons.account_circle, color: Colors.blue[600]),
+                  title: Text(
+                    'My Profile',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                ),
+                
+                Divider(height: 24, thickness: 1, indent: 16, endIndent: 16),
+                
                 ..._getRoleSpecificMenuItems(user.role, context),
                 
                 Divider(height: 32, thickness: 1),
@@ -509,48 +527,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActivityCard() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Icon(
-            Icons.upcoming,
-            size: 48,
-            color: Colors.grey[400],
-          ),
-          SizedBox(height: 12),
-          Text(
-            'No recent activity',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            'Your activities will appear here',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[500],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   List<Color> _getRoleGradientColors(UserRole role) {
     switch (role) {

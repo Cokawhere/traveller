@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:traveller/screens/home_screen.dart';
 import 'package:traveller/screens/login_screen.dart';
+import 'package:traveller/screens/profile_screen.dart';
 import 'package:traveller/screens/register_screen.dart';
 import 'package:traveller/services/auth.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/home': (context) => HomeScreen(),
+        '/profile': (context) => ProfileScreen(),
       },
     );
   }
