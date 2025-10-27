@@ -156,7 +156,18 @@ class HomeScreen extends StatelessWidget {
                 _buildInfoCard('Account Type', _getRoleDescription(user.role), Icons.info_outlined),
 
                 SizedBox(height: 32),
-                
+
+                // Quick Stats or Recent Activity
+                Text(
+                  'Recent Activity',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                  ),
+                ),
+                SizedBox(height: 16),
+                _buildActivityCard(),
               ],
             ),
           ),
@@ -270,10 +281,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Navigate to settings
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Settings clicked')),
-                    );
+                    Navigator.pushNamed(context, '/settings');
                   },
                 ),
                 ListTile(
@@ -287,10 +295,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Navigate to help
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Help & Support clicked')),
-                    );
+                    Navigator.pushNamed(context, '/help-support');
                   },
                 ),
                 ListTile(
@@ -304,7 +309,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    // Show about dialog
                     _showAboutDialog(context);
                   },
                 ),
@@ -345,26 +349,31 @@ class HomeScreen extends StatelessWidget {
             'title': 'User Management',
             'icon': Icons.people,
             'color': Colors.red[600],
+            'route': '/user-management',
           },
           {
             'title': 'System Settings',
             'icon': Icons.settings_applications,
             'color': Colors.orange[600],
+            'route': '/system-settings',
           },
           {
             'title': 'Reports & Analytics',
             'icon': Icons.analytics,
             'color': Colors.purple[600],
+            'route': '/reports-analytics',
           },
           {
             'title': 'View All Reports',
             'icon': Icons.report,
             'color': Colors.red[400],
+            'route': '/all-reports',
           },
           {
             'title': 'Manage Evaluations',
             'icon': Icons.star_rate,
             'color': Colors.amber[600],
+            'route': '/manage-evaluations',
           },
         ];
         break;
@@ -375,36 +384,43 @@ class HomeScreen extends StatelessWidget {
             'title': 'Browse Trips',
             'icon': Icons.explore,
             'color': Colors.blue[600],
+            'route': '/browse-trips',
           },
           {
             'title': 'My Trips',
             'icon': Icons.card_travel,
             'color': Colors.green[600],
+            'route': '/my-trips',
           },
           {
             'title': 'Create Trip',
             'icon': Icons.add_location_alt,
             'color': Colors.teal[600],
+            'route': '/create-trip',
           },
           {
             'title': 'Share Location',
             'icon': Icons.location_on,
             'color': Colors.red[600],
+            'route': '/share-location',
           },
           {
             'title': 'My Evaluations',
             'icon': Icons.star_border,
             'color': Colors.amber[600],
+            'route': '/my-evaluations',
           },
           {
             'title': 'Travel History',
             'icon': Icons.history,
             'color': Colors.indigo[600],
+            'route': '/travel-history',
           },
           {
             'title': 'Community Posts',
             'icon': Icons.forum,
             'color': Colors.purple[600],
+            'route': '/community-posts',
           },
         ];
         break;
@@ -415,31 +431,37 @@ class HomeScreen extends StatelessWidget {
             'title': 'Browse Trips',
             'icon': Icons.search,
             'color': Colors.teal[600],
+            'route': '/browse-trips',
           },
           {
             'title': 'Send Request',
             'icon': Icons.send,
             'color': Colors.blue[600],
+            'route': '/send-request',
           },
           {
             'title': 'My Requests',
             'icon': Icons.inbox,
             'color': Colors.orange[600],
+            'route': '/my-requests',
           },
           {
             'title': 'Accepted Trips',
             'icon': Icons.check_circle,
             'color': Colors.green[600],
+            'route': '/accepted-trips',
           },
           {
             'title': 'My Evaluations',
             'icon': Icons.rate_review,
             'color': Colors.amber[600],
+            'route': '/my-evaluations',
           },
           {
             'title': 'Community Posts',
             'icon': Icons.article,
             'color': Colors.purple[600],
+            'route': '/community-posts',
           },
         ];
         break;
@@ -460,10 +482,9 @@ class HomeScreen extends StatelessWidget {
         ),
         onTap: () {
           Navigator.pop(context);
-          // Handle navigation
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('${item['title']} clicked')),
-          );
+          if (item['route'] != null) {
+            Navigator.pushNamed(context, item['route'] as String);
+          }
         },
       );
     }).toList();
@@ -527,7 +548,48 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
+  Widget _buildActivityCard() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Icon(
+            Icons.upcoming,
+            size: 48,
+            color: Colors.grey[400],
+          ),
+          SizedBox(height: 12),
+          Text(
+            'No recent activity',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            'Your activities will appear here',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[500],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   List<Color> _getRoleGradientColors(UserRole role) {
     switch (role) {
