@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:traveller/models/user_model.dart';
-import 'package:traveller/screens/home_screen.dart';
-import 'package:traveller/screens/login_screen.dart';
+import '../../../routes.dart';
+import '../../../screens/home_screen.dart' show HomeScreen;
+import '../screens/login_screen.dart';
 
 
 class AuthService {
@@ -244,20 +246,21 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<auth.User?>(
-      stream: auth.FirebaseAuth.instance.authStateChanges(),
+    final AuthService _authService = AuthService();
+
+    return FutureBuilder<UserModel?>(
+      future: _authService.getCurrentUserData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
-        
         if (snapshot.hasData) {
           return HomeScreen();
+        } else {
+          return const LoginScreen();
         }
-        
-        return const LoginScreen();
       },
     );
   }

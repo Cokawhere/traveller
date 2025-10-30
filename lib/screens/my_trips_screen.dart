@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:get/get.dart';
+import 'package:traveller/routes.dart';
 
 class MyTripsScreen extends StatefulWidget {
   const MyTripsScreen({super.key});
@@ -90,7 +92,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/create-trip');
+          Get.toNamed(
+              '/create-trip'); // Note: '/create-trip' is not in AppRoutes
         },
         backgroundColor: Colors.blue[600],
         icon: const Icon(Icons.add),
@@ -100,7 +103,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
   }
 
   Widget _buildTripCard(Map<String, dynamic> trip, String tripId) {
-    DateTime tripTime = DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
+    DateTime tripTime =
+        DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
     bool isPast = tripTime.isBefore(DateTime.now());
 
     return Card(
@@ -112,11 +116,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            '/trip-details',
-            arguments: tripId,
-          );
+          Get.toNamed(AppRoutes.tripDetails, arguments: tripId);
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -154,7 +154,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                         ),
                         Row(
                           children: [
-                            Icon(Icons.arrow_downward, size: 16, color: Colors.grey[600]),
+                            Icon(Icons.arrow_downward,
+                                size: 16, color: Colors.grey[600]),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
@@ -174,7 +175,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                   ),
                   if (isPast)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(12),
@@ -190,7 +192,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                     )
                   else
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.green[100],
                         borderRadius: BorderRadius.circular(12),
@@ -239,8 +242,10 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                     .where('tripId', isEqualTo: tripId)
                     .snapshots(),
                 builder: (context, requestSnapshot) {
-                  int requestCount = requestSnapshot.hasData ? requestSnapshot.data!.docs.length : 0;
-                  
+                  int requestCount = requestSnapshot.hasData
+                      ? requestSnapshot.data!.docs.length
+                      : 0;
+
                   return Row(
                     children: [
                       Icon(Icons.people, size: 16, color: Colors.grey[600]),

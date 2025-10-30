@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class TripDetailsScreen extends StatefulWidget {
@@ -29,16 +30,18 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         actions: [
           // Only show edit/delete if it's the user's trip
           StreamBuilder<DocumentSnapshot>(
-            stream: _firestore.collection('trips').doc(widget.tripId).snapshots(),
+            stream:
+                _firestore.collection('trips').doc(widget.tripId).snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) return const SizedBox();
-              
+
               var tripData = snapshot.data!.data() as Map<String, dynamic>?;
               if (tripData == null) return const SizedBox();
-              
+
               String travelerId = tripData['travelerId'] ?? '';
-              String currentUserId = auth.FirebaseAuth.instance.currentUser?.uid ?? '';
-              
+              String currentUserId =
+                  auth.FirebaseAuth.instance.currentUser?.uid ?? '';
+
               if (travelerId == currentUserId) {
                 return PopupMenuButton(
                   icon: const Icon(Icons.more_vert),
@@ -59,7 +62,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                         children: [
                           Icon(Icons.delete, size: 20, color: Colors.red[600]),
                           const SizedBox(width: 12),
-                          Text('Delete Trip', style: TextStyle(color: Colors.red[600])),
+                          Text('Delete Trip',
+                              style: TextStyle(color: Colors.red[600])),
                         ],
                       ),
                     ),
@@ -70,7 +74,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     } else if (value == 'edit') {
                       // Navigate to edit screen
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Edit feature coming soon')),
+                        const SnackBar(
+                            content: Text('Edit feature coming soon')),
                       );
                     }
                   },
@@ -105,7 +110,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
           }
 
           var trip = snapshot.data!.data() as Map<String, dynamic>;
-          DateTime tripTime = DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
+          DateTime tripTime =
+              DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
           bool isPast = tripTime.isBefore(DateTime.now());
           String travelerId = trip['travelerId'] ?? '';
 
@@ -128,7 +134,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -145,7 +152,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          const Icon(Icons.trip_origin, color: Colors.white, size: 24),
+                          const Icon(Icons.trip_origin,
+                              color: Colors.white, size: 24),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
@@ -162,7 +170,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.arrow_downward, color: Colors.white70, size: 24),
+                          const Icon(Icons.arrow_downward,
+                              color: Colors.white70, size: 24),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Container(
@@ -175,7 +184,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, color: Colors.white, size: 24),
+                          const Icon(Icons.location_on,
+                              color: Colors.white, size: 24),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
@@ -216,7 +226,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.calendar_today, size: 20, color: Colors.grey[600]),
+                                        Icon(Icons.calendar_today,
+                                            size: 20, color: Colors.grey[600]),
                                         const SizedBox(width: 8),
                                         Text(
                                           'Date',
@@ -250,7 +261,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.access_time, size: 20, color: Colors.grey[600]),
+                                        Icon(Icons.access_time,
+                                            size: 20, color: Colors.grey[600]),
                                         const SizedBox(width: 8),
                                         Text(
                                           'Time',
@@ -278,7 +290,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       ),
 
                       // Description
-                      if (trip['description'] != null && trip['description'].toString().isNotEmpty) ...[
+                      if (trip['description'] != null &&
+                          trip['description'].toString().isNotEmpty) ...[
                         const SizedBox(height: 16),
                         Text(
                           'Description',
@@ -320,23 +333,29 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       ),
                       const SizedBox(height: 8),
                       FutureBuilder<DocumentSnapshot>(
-                        future: _firestore.collection('travelers').doc(travelerId).get(),
+                        future: _firestore
+                            .collection('travelers')
+                            .doc(travelerId)
+                            .get(),
                         builder: (context, travelerSnapshot) {
                           if (!travelerSnapshot.hasData) {
                             return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
-                                child: Center(child: CircularProgressIndicator()),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
                               ),
                             );
                           }
 
-                          var travelerData = travelerSnapshot.data!.data() as Map<String, dynamic>?;
+                          var travelerData = travelerSnapshot.data!.data()
+                              as Map<String, dynamic>?;
                           if (travelerData == null) {
                             return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
-                                child: Text('Traveler information not available'),
+                                child:
+                                    Text('Traveler information not available'),
                               ),
                             );
                           }
@@ -352,12 +371,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                   CircleAvatar(
                                     radius: 30,
                                     backgroundColor: Colors.blue[100],
-                                    child: Icon(Icons.person, color: Colors.blue[600], size: 30),
+                                    child: Icon(Icons.person,
+                                        color: Colors.blue[600], size: 30),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           travelerData['name'] ?? 'Unknown',
@@ -367,10 +388,13 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                           ),
                                         ),
                                         const SizedBox(height: 4),
-                                        if (travelerData['carName'] != null) ...[
+                                        if (travelerData['carName'] !=
+                                            null) ...[
                                           Row(
                                             children: [
-                                              Icon(Icons.directions_car, size: 16, color: Colors.grey[600]),
+                                              Icon(Icons.directions_car,
+                                                  size: 16,
+                                                  color: Colors.grey[600]),
                                               const SizedBox(width: 4),
                                               Text(
                                                 '${travelerData['carName']} ${travelerData['carModel'] ?? ''}',
@@ -382,7 +406,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                             ],
                                           ),
                                         ],
-                                        if (travelerData['yearsOfDriving'] != null) ...[
+                                        if (travelerData['yearsOfDriving'] !=
+                                            null) ...[
                                           const SizedBox(height: 2),
                                           Text(
                                             '${travelerData['yearsOfDriving']} years of driving',
@@ -424,7 +449,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
-                                child: Center(child: CircularProgressIndicator()),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
                               ),
                             );
                           }
@@ -438,7 +464,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                 padding: const EdgeInsets.all(24),
                                 child: Column(
                                   children: [
-                                    Icon(Icons.inbox, size: 48, color: Colors.grey[400]),
+                                    Icon(Icons.inbox,
+                                        size: 48, color: Colors.grey[400]),
                                     const SizedBox(height: 12),
                                     Text(
                                       'No requests yet',
@@ -454,9 +481,12 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           }
 
                           return Column(
-                            children: requestSnapshot.data!.docs.map((requestDoc) {
-                              var requestData = requestDoc.data() as Map<String, dynamic>;
-                              return _buildRequestCard(requestData, requestDoc.id);
+                            children:
+                                requestSnapshot.data!.docs.map((requestDoc) {
+                              var requestData =
+                                  requestDoc.data() as Map<String, dynamic>;
+                              return _buildRequestCard(
+                                  requestData, requestDoc.id);
                             }).toList(),
                           );
                         },
@@ -482,13 +512,17 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: FutureBuilder<DocumentSnapshot>(
-          future: FirebaseFirestore.instance.collection('companiers').doc(companionId).get(),
+          future: FirebaseFirestore.instance
+              .collection('companiers')
+              .doc(companionId)
+              .get(),
           builder: (context, companionSnapshot) {
             if (!companionSnapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            var companionData = companionSnapshot.data!.data() as Map<String, dynamic>?;
+            var companionData =
+                companionSnapshot.data!.data() as Map<String, dynamic>?;
             String companionName = companionData?['name'] ?? 'Unknown';
 
             return Column(
@@ -499,7 +533,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.teal[100],
-                      child: Icon(Icons.business, color: Colors.teal[600], size: 20),
+                      child: Icon(Icons.business,
+                          color: Colors.teal[600], size: 20),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -532,7 +567,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => _updateRequestStatus(requestId, 'rejected'),
+                          onPressed: () =>
+                              _updateRequestStatus(requestId, 'rejected'),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.red[600],
                             side: BorderSide(color: Colors.red[300]!),
@@ -543,7 +579,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () => _updateRequestStatus(requestId, 'accepted'),
+                          onPressed: () =>
+                              _updateRequestStatus(requestId, 'accepted'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green[600],
                           ),
@@ -615,7 +652,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Request $status!'),
-          backgroundColor: status == 'accepted' ? Colors.green[600] : Colors.red[600],
+          backgroundColor:
+              status == 'accepted' ? Colors.green[600] : Colors.red[600],
         ),
       );
     } catch (e) {
@@ -634,7 +672,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Delete Trip'),
-        content: const Text('Are you sure you want to delete this trip? This action cannot be undone.'),
+        content: const Text(
+            'Are you sure you want to delete this trip? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -643,9 +682,12 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
           ElevatedButton(
             onPressed: () async {
               try {
-                await _firestore.collection('trips').doc(widget.tripId).delete();
-                Navigator.pop(context); // Close dialog
-                Navigator.pop(context); // Go back to previous screen
+                await _firestore
+                    .collection('trips')
+                    .doc(widget.tripId)
+                    .delete();
+                Get.back(); // Close dialog
+                Get.back(); // Go back to previous screen
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Trip deleted successfully'),
@@ -653,7 +695,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                   ),
                 );
               } catch (e) {
-                Navigator.pop(context);
+                Get.back();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Error deleting trip: ${e.toString()}'),
@@ -673,7 +715,20 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   }
 
   String _formatDate(DateTime date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
 

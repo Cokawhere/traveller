@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:traveller/routes.dart';
 
 class BrowseTripsScreen extends StatefulWidget {
   const BrowseTripsScreen({super.key});
@@ -54,7 +56,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                     ),
                     filled: true,
                     fillColor: Colors.grey[50],
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -96,7 +99,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.explore_off, size: 80, color: Colors.grey[400]),
+                        Icon(Icons.explore_off,
+                            size: 80, color: Colors.grey[400]),
                         const SizedBox(height: 16),
                         Text(
                           'No trips available',
@@ -115,8 +119,10 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                 var trips = snapshot.data!.docs.where((doc) {
                   var data = doc.data() as Map<String, dynamic>;
                   String origin = (data['origin'] ?? '').toLowerCase();
-                  String destination = (data['destination'] ?? '').toLowerCase();
-                  DateTime tripTime = DateTime.parse(data['time'] ?? DateTime.now().toIso8601String());
+                  String destination =
+                      (data['destination'] ?? '').toLowerCase();
+                  DateTime tripTime = DateTime.parse(
+                      data['time'] ?? DateTime.now().toIso8601String());
                   bool isPast = tripTime.isBefore(DateTime.now());
 
                   // Search filter
@@ -137,7 +143,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
+                        Icon(Icons.search_off,
+                            size: 80, color: Colors.grey[400]),
                         const SizedBox(height: 16),
                         Text(
                           'No trips found',
@@ -194,7 +201,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
   }
 
   Widget _buildTripCard(Map<String, dynamic> trip, String tripId) {
-    DateTime tripTime = DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
+    DateTime tripTime =
+        DateTime.parse(trip['time'] ?? DateTime.now().toIso8601String());
     bool isPast = tripTime.isBefore(DateTime.now());
     String travelerId = trip['travelerId'] ?? '';
 
@@ -205,7 +213,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          Navigator.pushNamed(context, '/trip-details', arguments: tripId);
+          Get.toNamed(AppRoutes.tripDetails, arguments: tripId);
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -214,11 +222,15 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
             children: [
               // Header with traveler info
               FutureBuilder<DocumentSnapshot>(
-                future: _firestore.collection('travelers').doc(travelerId).get(),
+                future:
+                    _firestore.collection('travelers').doc(travelerId).get(),
                 builder: (context, travelerSnapshot) {
                   String travelerName = 'Unknown Traveler';
-                  if (travelerSnapshot.hasData && travelerSnapshot.data!.exists) {
-                    travelerName = (travelerSnapshot.data!.data() as Map<String, dynamic>)['name'] ?? 'Unknown';
+                  if (travelerSnapshot.hasData &&
+                      travelerSnapshot.data!.exists) {
+                    travelerName = (travelerSnapshot.data!.data()
+                            as Map<String, dynamic>)['name'] ??
+                        'Unknown';
                   }
 
                   return Row(
@@ -252,7 +264,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                       ),
                       if (isPast)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(12),
@@ -268,7 +281,8 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                         )
                       else
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.green[100],
                             borderRadius: BorderRadius.circular(12),
@@ -339,8 +353,9 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   ),
                 ],
               ),
-              
-              if (trip['description'] != null && trip['description'].toString().isNotEmpty) ...[
+
+              if (trip['description'] != null &&
+                  trip['description'].toString().isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
                   trip['description'],

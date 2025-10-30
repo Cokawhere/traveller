@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:traveller/services/auth.dart';
+import 'package:get/get.dart';
+import 'package:traveller/features/auth/services/auth.dart';
+import 'package:traveller/routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 60),
-              
+
               // App Logo/Title
               Icon(
                 Icons.lock_outline,
@@ -106,10 +108,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           elevation: 2,
                         ),
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
                                 'Sign In',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
                               ),
                       ),
                     ),
@@ -129,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/register');
+                      Get.toNamed(AppRoutes.register);
                     },
                     child: Text(
                       'Sign Up',
@@ -178,7 +182,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }
@@ -200,8 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (error == null) {
-      // Login successful, AuthWrapper will handle navigation
-      Navigator.pushReplacementNamed(context, '/home');
+      Get.offAllNamed(AppRoutes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

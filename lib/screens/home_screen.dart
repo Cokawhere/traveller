@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:traveller/enums/user_enum.dart';
 import 'package:traveller/models/user_model.dart';
-import 'package:traveller/services/auth.dart';
+import 'package:traveller/routes.dart';
+import 'package:traveller/features/auth/services/auth.dart';
 
 class HomeScreen extends StatelessWidget {
   final AuthService _authService = AuthService();
@@ -20,10 +22,10 @@ class HomeScreen extends StatelessWidget {
         }
 
         if (!snapshot.hasData || snapshot.data == null) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacementNamed(context, '/login');
-          });
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => Get.offAllNamed(AppRoutes.login));
+          return const Scaffold(
+              body: Center(child: CircularProgressIndicator()));
         }
 
         UserModel user = snapshot.data!;
@@ -120,7 +122,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -153,9 +156,11 @@ class HomeScreen extends StatelessWidget {
 
                 _buildInfoCard('Email', user.email, Icons.email_outlined),
                 const SizedBox(height: 12),
-                _buildInfoCard('Role', _getRoleDisplayName(user.role), _getRoleIcon(user.role)),
+                _buildInfoCard('Role', _getRoleDisplayName(user.role),
+                    _getRoleIcon(user.role)),
                 const SizedBox(height: 12),
-                _buildInfoCard('Account Type', _getRoleDescription(user.role), Icons.info_outlined),
+                _buildInfoCard('Account Type', _getRoleDescription(user.role),
+                    Icons.info_outlined),
 
                 const SizedBox(height: 32),
 
@@ -185,7 +190,11 @@ class HomeScreen extends StatelessWidget {
           // Drawer Header
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 20, bottom: 20, left: 20, right: 20),
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 20,
+                bottom: 20,
+                left: 20,
+                right: 20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: _getRoleGradientColors(user.role),
@@ -224,7 +233,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
@@ -248,7 +258,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 const SizedBox(height: 8),
-                
+
                 // Profile menu item (for all roles)
                 ListTile(
                   leading: Icon(Icons.account_circle, color: Colors.blue[600]),
@@ -260,17 +270,18 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/profile');
+                    Get.back(); // Close drawer
+                    Get.toNamed(AppRoutes.profile);
                   },
                 ),
-                
-                const Divider(height: 24, thickness: 1, indent: 16, endIndent: 16),
-                
+
+                const Divider(
+                    height: 24, thickness: 1, indent: 16, endIndent: 16),
+
                 ..._getRoleSpecificMenuItems(user.role, context),
-                
+
                 const Divider(height: 32, thickness: 1),
-                
+
                 // Common menu items
                 ListTile(
                   leading: Icon(Icons.settings, color: Colors.grey[700]),
@@ -282,8 +293,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/settings');
+                    Get.back();
+                    // TODO: Add settings route
+                    Get.snackbar(
+                        'Coming Soon', 'Settings page is under development.');
+                    // Get.toNamed(AppRoutes.settings);
                   },
                 ),
                 ListTile(
@@ -296,8 +310,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/help-support');
+                    Get.back();
+                    // TODO: Add help & support route
+                    Get.snackbar('Coming Soon',
+                        'Help & Support page is under development.');
+                    // Get.toNamed(AppRoutes.helpSupport);
                   },
                 ),
                 ListTile(
@@ -310,7 +327,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                     _showAboutDialog(context);
                   },
                 ),
@@ -331,7 +348,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Get.back();
               _showLogoutDialog(context);
             },
           ),
@@ -485,7 +502,7 @@ class HomeScreen extends StatelessWidget {
         onTap: () {
           Navigator.pop(context);
           if (item['route'] != null) {
-            Navigator.pushNamed(context, item['route'] as String);
+            Get.toNamed(item['route'] as String);
           }
         },
       );
@@ -663,8 +680,8 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 await _authService.logout();
-                Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, '/login');
+                Get.back(); // Close dialog
+                Get.offAllNamed(AppRoutes.login);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red[600],

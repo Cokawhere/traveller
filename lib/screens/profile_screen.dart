@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:traveller/enums/user_enum.dart';
 import 'package:traveller/models/user_model.dart';
-import 'package:traveller/services/auth.dart';
+import 'package:traveller/features/auth/services/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

@@ -1,7 +1,9 @@
 // lib/screens/register_screen.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:traveller/enums/user_enum.dart';
-import 'package:traveller/services/auth.dart';
+import 'package:traveller/routes.dart';
+import 'package:traveller/features/auth/services/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -258,6 +260,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
+                      Get.back();
                     },
                     child: Text(
                       'Sign In',
@@ -447,6 +450,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (error == null) {
       // Registration successful
       Navigator.pushReplacementNamed(context, '/home');
+      Get.offAllNamed(AppRoutes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
