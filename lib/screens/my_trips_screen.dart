@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class MyTripsScreen extends StatefulWidget {
+  const MyTripsScreen({super.key});
+
   @override
   _MyTripsScreenState createState() => _MyTripsScreenState();
 }
@@ -20,7 +22,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.grey[800],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'My Trips',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -33,7 +35,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
@@ -52,7 +54,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                     size: 80,
                     color: Colors.grey[400],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'No trips yet',
                     style: TextStyle(
@@ -61,7 +63,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                       color: Colors.grey[600],
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'Create your first trip!',
                     style: TextStyle(
@@ -75,7 +77,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
           }
 
           return ListView.builder(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var trip = snapshot.data!.docs[index];
@@ -91,8 +93,8 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
           Navigator.pushNamed(context, '/create-trip');
         },
         backgroundColor: Colors.blue[600],
-        icon: Icon(Icons.add),
-        label: Text('Create Trip'),
+        icon: const Icon(Icons.add),
+        label: const Text('Create Trip'),
       ),
     );
   }
@@ -102,7 +104,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
     bool isPast = tripTime.isBefore(DateTime.now());
 
     return Card(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -117,14 +119,14 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
           );
         },
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: isPast ? Colors.grey[200] : Colors.blue[50],
                       borderRadius: BorderRadius.circular(8),
@@ -135,7 +137,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                       size: 24,
                     ),
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +155,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                         Row(
                           children: [
                             Icon(Icons.arrow_downward, size: 16, color: Colors.grey[600]),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Expanded(
                               child: Text(
                                 trip['destination'] ?? 'Unknown',
@@ -172,7 +174,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                   ),
                   if (isPast)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(12),
@@ -188,7 +190,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                     )
                   else
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.green[100],
                         borderRadius: BorderRadius.circular(12),
@@ -204,13 +206,13 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                     ),
                 ],
               ),
-              SizedBox(height: 12),
-              Divider(height: 1),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Icon(Icons.calendar_today, size: 16, color: Colors.grey[600]),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     _formatDate(tripTime),
                     style: TextStyle(
@@ -218,9 +220,9 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     _formatTime(tripTime),
                     style: TextStyle(
@@ -230,7 +232,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore
                     .collection('requests')
@@ -242,7 +244,7 @@ class _MyTripsScreenState extends State<MyTripsScreen> {
                   return Row(
                     children: [
                       Icon(Icons.people, size: 16, color: Colors.grey[600]),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         '$requestCount companion request${requestCount != 1 ? 's' : ''}',
                         style: TextStyle(

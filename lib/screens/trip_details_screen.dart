@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 class TripDetailsScreen extends StatefulWidget {
   final String tripId;
 
-  TripDetailsScreen({required this.tripId});
+  const TripDetailsScreen({super.key, required this.tripId});
 
   @override
   _TripDetailsScreenState createState() => _TripDetailsScreenState();
@@ -22,7 +22,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.grey[800],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Trip Details',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -31,25 +31,25 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
           StreamBuilder<DocumentSnapshot>(
             stream: _firestore.collection('trips').doc(widget.tripId).snapshots(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) return SizedBox();
+              if (!snapshot.hasData) return const SizedBox();
               
               var tripData = snapshot.data!.data() as Map<String, dynamic>?;
-              if (tripData == null) return SizedBox();
+              if (tripData == null) return const SizedBox();
               
               String travelerId = tripData['travelerId'] ?? '';
               String currentUserId = auth.FirebaseAuth.instance.currentUser?.uid ?? '';
               
               if (travelerId == currentUserId) {
                 return PopupMenuButton(
-                  icon: Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert),
                   itemBuilder: (context) => [
                     PopupMenuItem(
                       value: 'edit',
                       child: Row(
                         children: [
                           Icon(Icons.edit, size: 20, color: Colors.grey[700]),
-                          SizedBox(width: 12),
-                          Text('Edit Trip'),
+                          const SizedBox(width: 12),
+                          const Text('Edit Trip'),
                         ],
                       ),
                     ),
@@ -58,7 +58,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       child: Row(
                         children: [
                           Icon(Icons.delete, size: 20, color: Colors.red[600]),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Text('Delete Trip', style: TextStyle(color: Colors.red[600])),
                         ],
                       ),
@@ -70,13 +70,13 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     } else if (value == 'edit') {
                       // Navigate to edit screen
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Edit feature coming soon')),
+                        const SnackBar(content: Text('Edit feature coming soon')),
                       );
                     }
                   },
                 );
               }
-              return SizedBox();
+              return const SizedBox();
             },
           ),
         ],
@@ -85,7 +85,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
         stream: _firestore.collection('trips').doc(widget.tripId).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || !snapshot.data!.exists) {
@@ -94,8 +94,8 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.error_outline, size: 80, color: Colors.grey[400]),
-                  SizedBox(height: 16),
-                  Text(
+                  const SizedBox(height: 16),
+                  const Text(
                     'Trip not found',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
@@ -116,7 +116,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                 // Trip Header
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Colors.blue[400]!, Colors.blue[600]!],
@@ -128,29 +128,29 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           isPast ? 'Completed' : 'Upcoming',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
-                          Icon(Icons.trip_origin, color: Colors.white, size: 24),
-                          SizedBox(width: 12),
+                          const Icon(Icons.trip_origin, color: Colors.white, size: 24),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               trip['origin'] ?? 'Unknown',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -159,11 +159,11 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Row(
                         children: [
-                          Icon(Icons.arrow_downward, color: Colors.white70, size: 24),
-                          SizedBox(width: 12),
+                          const Icon(Icons.arrow_downward, color: Colors.white70, size: 24),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Container(
                               height: 2,
@@ -172,15 +172,15 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Row(
                         children: [
-                          Icon(Icons.location_on, color: Colors.white, size: 24),
-                          SizedBox(width: 12),
+                          const Icon(Icons.location_on, color: Colors.white, size: 24),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               trip['destination'] ?? 'Unknown',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -193,11 +193,11 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                   ),
                 ),
 
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 // Trip Information
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -207,7 +207,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: Row(
                             children: [
                               Expanded(
@@ -217,7 +217,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                     Row(
                                       children: [
                                         Icon(Icons.calendar_today, size: 20, color: Colors.grey[600]),
-                                        SizedBox(width: 8),
+                                        const SizedBox(width: 8),
                                         Text(
                                           'Date',
                                           style: TextStyle(
@@ -227,10 +227,10 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text(
                                       _formatDate(tripTime),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -243,7 +243,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                 height: 40,
                                 color: Colors.grey[300],
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,7 +251,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                     Row(
                                       children: [
                                         Icon(Icons.access_time, size: 20, color: Colors.grey[600]),
-                                        SizedBox(width: 8),
+                                        const SizedBox(width: 8),
                                         Text(
                                           'Time',
                                           style: TextStyle(
@@ -261,10 +261,10 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 4),
+                                    const SizedBox(height: 4),
                                     Text(
                                       _formatTime(tripTime),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -279,7 +279,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
 
                       // Description
                       if (trip['description'] != null && trip['description'].toString().isNotEmpty) ...[
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'Description',
                           style: TextStyle(
@@ -288,13 +288,13 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             color: Colors.grey[800],
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: Text(
                               trip['description'],
                               style: TextStyle(
@@ -307,7 +307,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                         ),
                       ],
 
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       // Traveler Info
                       Text(
@@ -318,12 +318,12 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       FutureBuilder<DocumentSnapshot>(
                         future: _firestore.collection('travelers').doc(travelerId).get(),
                         builder: (context, travelerSnapshot) {
                           if (!travelerSnapshot.hasData) {
-                            return Card(
+                            return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
                                 child: Center(child: CircularProgressIndicator()),
@@ -333,7 +333,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
 
                           var travelerData = travelerSnapshot.data!.data() as Map<String, dynamic>?;
                           if (travelerData == null) {
-                            return Card(
+                            return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
                                 child: Text('Traveler information not available'),
@@ -346,7 +346,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Row(
                                 children: [
                                   CircleAvatar(
@@ -354,24 +354,24 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                     backgroundColor: Colors.blue[100],
                                     child: Icon(Icons.person, color: Colors.blue[600], size: 30),
                                   ),
-                                  SizedBox(width: 16),
+                                  const SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           travelerData['name'] ?? 'Unknown',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        SizedBox(height: 4),
+                                        const SizedBox(height: 4),
                                         if (travelerData['carName'] != null) ...[
                                           Row(
                                             children: [
                                               Icon(Icons.directions_car, size: 16, color: Colors.grey[600]),
-                                              SizedBox(width: 4),
+                                              const SizedBox(width: 4),
                                               Text(
                                                 '${travelerData['carName']} ${travelerData['carModel'] ?? ''}',
                                                 style: TextStyle(
@@ -383,7 +383,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                           ),
                                         ],
                                         if (travelerData['yearsOfDriving'] != null) ...[
-                                          SizedBox(height: 2),
+                                          const SizedBox(height: 2),
                                           Text(
                                             '${travelerData['yearsOfDriving']} years of driving',
                                             style: TextStyle(
@@ -402,7 +402,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                         },
                       ),
 
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       // Companion Requests
                       Text(
@@ -413,7 +413,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       StreamBuilder<QuerySnapshot>(
                         stream: _firestore
                             .collection('requests')
@@ -421,7 +421,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             .snapshots(),
                         builder: (context, requestSnapshot) {
                           if (!requestSnapshot.hasData) {
-                            return Card(
+                            return const Card(
                               child: Padding(
                                 padding: EdgeInsets.all(16),
                                 child: Center(child: CircularProgressIndicator()),
@@ -435,11 +435,11 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(24),
+                                padding: const EdgeInsets.all(24),
                                 child: Column(
                                   children: [
                                     Icon(Icons.inbox, size: 48, color: Colors.grey[400]),
-                                    SizedBox(height: 12),
+                                    const SizedBox(height: 12),
                                     Text(
                                       'No requests yet',
                                       style: TextStyle(
@@ -477,15 +477,15 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     String status = request['status'] ?? 'pending';
 
     return Card(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance.collection('companiers').doc(companionId).get(),
           builder: (context, companionSnapshot) {
             if (!companionSnapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             var companionData = companionSnapshot.data!.data() as Map<String, dynamic>?;
@@ -501,14 +501,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       backgroundColor: Colors.teal[100],
                       child: Icon(Icons.business, color: Colors.teal[600], size: 20),
                     ),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             companionName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
                             ),
@@ -527,7 +527,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                   ],
                 ),
                 if (status == 'pending' && _isCurrentUserTraveler()) ...[
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Row(
                     children: [
                       Expanded(
@@ -537,17 +537,17 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                             foregroundColor: Colors.red[600],
                             side: BorderSide(color: Colors.red[300]!),
                           ),
-                          child: Text('Reject'),
+                          child: const Text('Reject'),
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => _updateRequestStatus(requestId, 'accepted'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green[600],
                           ),
-                          child: Text('Accept'),
+                          child: const Text('Accept'),
                         ),
                       ),
                     ],
@@ -584,7 +584,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
@@ -614,7 +614,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Request ${status}!'),
+          content: Text('Request $status!'),
           backgroundColor: status == 'accepted' ? Colors.green[600] : Colors.red[600],
         ),
       );
@@ -633,12 +633,12 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('Delete Trip'),
-        content: Text('Are you sure you want to delete this trip? This action cannot be undone.'),
+        title: const Text('Delete Trip'),
+        content: const Text('Are you sure you want to delete this trip? This action cannot be undone.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -648,7 +648,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                 Navigator.pop(context); // Go back to previous screen
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Trip deleted successfully'),
+                    content: const Text('Trip deleted successfully'),
                     backgroundColor: Colors.green[600],
                   ),
                 );
@@ -665,7 +665,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red[600],
             ),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),

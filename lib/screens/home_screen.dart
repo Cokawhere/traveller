@@ -6,13 +6,15 @@ import 'package:traveller/services/auth.dart';
 class HomeScreen extends StatelessWidget {
   final AuthService _authService = AuthService();
 
+  HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserModel?>(
       future: _authService.getCurrentUserData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
@@ -21,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushReplacementNamed(context, '/login');
           });
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
 
         UserModel user = snapshot.data!;
@@ -50,14 +52,14 @@ class HomeScreen extends StatelessWidget {
           ),
           drawer: _buildDrawer(context, user),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Welcome Card
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: _getRoleGradientColors(user.role),
@@ -69,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
                         blurRadius: 20,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
@@ -79,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(12),
@@ -90,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                               size: 32,
                             ),
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,10 +104,10 @@ class HomeScreen extends StatelessWidget {
                                     fontSize: 16,
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   user.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -116,16 +118,16 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           '${_getRoleDisplayName(user.role)} Account',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -136,7 +138,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
 
                 // User Info Section
                 Text(
@@ -147,15 +149,15 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.grey[800],
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
 
                 _buildInfoCard('Email', user.email, Icons.email_outlined),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 _buildInfoCard('Role', _getRoleDisplayName(user.role), _getRoleIcon(user.role)),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 _buildInfoCard('Account Type', _getRoleDescription(user.role), Icons.info_outlined),
 
-                SizedBox(height: 32),
+                const SizedBox(height: 32),
 
                 // Quick Stats or Recent Activity
                 Text(
@@ -166,7 +168,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.grey[800],
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildActivityCard(),
               ],
             ),
@@ -203,16 +205,16 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
                   user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   user.email,
                   style: TextStyle(
@@ -220,16 +222,16 @@ class HomeScreen extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     _getRoleDisplayName(user.role),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -245,12 +247,12 @@ class HomeScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 
                 // Profile menu item (for all roles)
                 ListTile(
                   leading: Icon(Icons.account_circle, color: Colors.blue[600]),
-                  title: Text(
+                  title: const Text(
                     'My Profile',
                     style: TextStyle(
                       fontSize: 16,
@@ -263,16 +265,16 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 
-                Divider(height: 24, thickness: 1, indent: 16, endIndent: 16),
+                const Divider(height: 24, thickness: 1, indent: 16, endIndent: 16),
                 
                 ..._getRoleSpecificMenuItems(user.role, context),
                 
-                Divider(height: 32, thickness: 1),
+                const Divider(height: 32, thickness: 1),
                 
                 // Common menu items
                 ListTile(
                   leading: Icon(Icons.settings, color: Colors.grey[700]),
-                  title: Text(
+                  title: const Text(
                     'Settings',
                     style: TextStyle(
                       fontSize: 16,
@@ -286,7 +288,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(Icons.help_outline, color: Colors.grey[700]),
-                  title: Text(
+                  title: const Text(
                     'Help & Support',
                     style: TextStyle(
                       fontSize: 16,
@@ -300,7 +302,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(Icons.info_outline, color: Colors.grey[700]),
-                  title: Text(
+                  title: const Text(
                     'About',
                     style: TextStyle(
                       fontSize: 16,
@@ -317,7 +319,7 @@ class HomeScreen extends StatelessWidget {
           ),
 
           // Logout button at bottom
-          Divider(height: 1, thickness: 1),
+          const Divider(height: 1, thickness: 1),
           ListTile(
             leading: Icon(Icons.logout, color: Colors.red[600]),
             title: Text(
@@ -333,7 +335,7 @@ class HomeScreen extends StatelessWidget {
               _showLogoutDialog(context);
             },
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -475,7 +477,7 @@ class HomeScreen extends StatelessWidget {
         ),
         title: Text(
           item['title'] as String,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -492,7 +494,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildInfoCard(String title, String value, IconData icon) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -500,14 +502,14 @@ class HomeScreen extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.blue[50],
               borderRadius: BorderRadius.circular(8),
@@ -518,7 +520,7 @@ class HomeScreen extends StatelessWidget {
               size: 20,
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -531,7 +533,7 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   value,
                   style: TextStyle(
@@ -550,7 +552,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildActivityCard() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -558,7 +560,7 @@ class HomeScreen extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -569,7 +571,7 @@ class HomeScreen extends StatelessWidget {
             size: 48,
             color: Colors.grey[400],
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             'No recent activity',
             style: TextStyle(
@@ -578,7 +580,7 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             'Your activities will appear here',
             style: TextStyle(
@@ -643,11 +645,11 @@ class HomeScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          title: Text(
+          title: const Text(
             'Logout',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          content: Text('Are you sure you want to logout?'),
+          content: const Text('Are you sure you want to logout?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -671,7 +673,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text('Logout'),
+              child: const Text('Logout'),
             ),
           ],
         );
@@ -690,24 +692,24 @@ class HomeScreen extends StatelessWidget {
           title: Row(
             children: [
               Icon(Icons.info, color: Colors.blue[600]),
-              SizedBox(width: 8),
-              Text('About'),
+              const SizedBox(width: 8),
+              const Text('About'),
             ],
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Traveller App',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text('Version 1.0.0'),
-              SizedBox(height: 16),
+              const SizedBox(height: 8),
+              const Text('Version 1.0.0'),
+              const SizedBox(height: 16),
               Text(
                 'A companion travel app connecting travelers with companions for safer journeys.',
                 style: TextStyle(color: Colors.grey[600]),
@@ -719,7 +721,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );

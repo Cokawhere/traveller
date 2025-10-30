@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class ShareLocationScreen extends StatefulWidget {
+  const ShareLocationScreen({super.key});
+
   @override
   _ShareLocationScreenState createState() => _ShareLocationScreenState();
 }
@@ -23,7 +25,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.grey[800],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Share Location',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -32,8 +34,8 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
         children: [
           // Info Card
           Container(
-            margin: EdgeInsets.all(16),
-            padding: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.blue[400]!, Colors.blue[600]!],
@@ -42,7 +44,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(Icons.info_outline, color: Colors.white, size: 32),
                 SizedBox(width: 16),
@@ -70,7 +72,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -83,7 +85,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
                           size: 80,
                           color: Colors.grey[400],
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'No active location shares',
                           style: TextStyle(
@@ -92,7 +94,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
                             color: Colors.grey[600],
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Share your location to get started',
                           style: TextStyle(
@@ -106,7 +108,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
                 }
 
                 return ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     var locationShare = snapshot.data!.docs[index];
@@ -122,8 +124,8 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showShareLocationDialog,
         backgroundColor: Colors.blue[600],
-        icon: Icon(Icons.location_on),
-        label: Text('Share Location'),
+        icon: const Icon(Icons.location_on),
+        label: const Text('Share Location'),
       ),
     );
   }
@@ -134,37 +136,37 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
     String timeAgo = _getTimeAgo(difference);
 
     return Card(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 2,
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.blue[50],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(Icons.location_on, color: Colors.blue[600], size: 24),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         location['locationName'] ?? 'Unknown Location',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         'Shared $timeAgo',
                         style: TextStyle(
@@ -181,9 +183,9 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.green[50],
                 borderRadius: BorderRadius.circular(8),
@@ -192,7 +194,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
               child: Row(
                 children: [
                   Icon(Icons.check_circle, color: Colors.green[600], size: 16),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     'Location is being shared',
                     style: TextStyle(
@@ -218,8 +220,8 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
         title: Row(
           children: [
             Icon(Icons.add_location, color: Colors.blue[600]),
-            SizedBox(width: 8),
-            Text('Share Location'),
+            const SizedBox(width: 8),
+            const Text('Share Location'),
           ],
         ),
         content: Column(
@@ -230,13 +232,13 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
               decoration: InputDecoration(
                 labelText: 'Location Name',
                 hintText: 'e.g., Downtown Cairo, Highway Rest Stop',
-                prefixIcon: Icon(Icons.place),
+                prefixIcon: const Icon(Icons.place),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               'Your location will be shared with companions on your active trips',
               style: TextStyle(
@@ -249,7 +251,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -259,7 +261,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue[600],
             ),
-            child: Text('Share'),
+            child: const Text('Share'),
           ),
         ],
       ),
@@ -270,7 +272,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
     if (_locationNameController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please enter a location name'),
+          content: const Text('Please enter a location name'),
           backgroundColor: Colors.orange[600],
         ),
       );
@@ -297,7 +299,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Location shared successfully!'),
+          content: const Text('Location shared successfully!'),
           backgroundColor: Colors.green[600],
         ),
       );
@@ -321,7 +323,7 @@ class _ShareLocationScreenState extends State<ShareLocationScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Location share removed'),
+          content: const Text('Location share removed'),
           backgroundColor: Colors.green[600],
         ),
       );

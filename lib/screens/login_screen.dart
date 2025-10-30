@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:traveller/services/auth.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -19,11 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 60),
+              const SizedBox(height: 60),
               
               // App Logo/Title
               Icon(
@@ -31,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 size: 80,
                 color: Colors.blue[600],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Welcome Back',
                 textAlign: TextAlign.center,
@@ -41,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.grey[800],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Sign in to your account',
                 textAlign: TextAlign.center,
@@ -50,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 48),
+              const SizedBox(height: 48),
 
               Form(
                 key: _formKey,
@@ -72,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Password Field
                     _buildTextField(
@@ -87,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
 
                     // Login Button
                     SizedBox(
@@ -104,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           elevation: 2,
                         ),
                         child: _isLoading
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text(
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : const Text(
                                 'Sign In',
                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                               ),
@@ -115,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Register Link
               Row(
@@ -176,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }

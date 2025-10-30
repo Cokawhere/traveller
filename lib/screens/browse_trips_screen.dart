@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BrowseTripsScreen extends StatefulWidget {
+  const BrowseTripsScreen({super.key});
+
   @override
   _BrowseTripsScreenState createState() => _BrowseTripsScreenState();
 }
@@ -19,7 +21,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.grey[800],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Browse Trips',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -28,7 +30,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
         children: [
           // Search and Filter
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             color: Colors.white,
             child: Column(
               children: [
@@ -41,7 +43,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Search by origin or destination...',
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(color: Colors.grey[300]!),
@@ -52,19 +54,19 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                     ),
                     filled: true,
                     fillColor: Colors.grey[50],
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 // Filter Chips
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
                       _buildFilterChip('All Trips', 'all'),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       _buildFilterChip('Upcoming', 'upcoming'),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       _buildFilterChip('Past', 'past'),
                     ],
                   ),
@@ -82,7 +84,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 if (snapshot.hasError) {
@@ -95,7 +97,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.explore_off, size: 80, color: Colors.grey[400]),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'No trips available',
                           style: TextStyle(
@@ -136,7 +138,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.search_off, size: 80, color: Colors.grey[400]),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'No trips found',
                           style: TextStyle(
@@ -145,7 +147,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                             color: Colors.grey[600],
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'Try adjusting your search or filters',
                           style: TextStyle(color: Colors.grey[500]),
@@ -156,7 +158,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                 }
 
                 return ListView.builder(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   itemCount: trips.length,
                   itemBuilder: (context, index) {
                     var trip = trips[index];
@@ -197,7 +199,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
     String travelerId = trip['travelerId'] ?? '';
 
     return Card(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 2,
       child: InkWell(
@@ -206,7 +208,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
           Navigator.pushNamed(context, '/trip-details', arguments: tripId);
         },
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -226,14 +228,14 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                         backgroundColor: Colors.blue[100],
                         child: Icon(Icons.person, color: Colors.blue[600]),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               travelerName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
@@ -250,7 +252,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                       ),
                       if (isPast)
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(12),
@@ -266,7 +268,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                         )
                       else
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.green[100],
                             borderRadius: BorderRadius.circular(12),
@@ -284,19 +286,19 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   );
                 },
               ),
-              SizedBox(height: 16),
-              Divider(height: 1),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
+              const Divider(height: 1),
+              const SizedBox(height: 16),
 
               // Trip Route
               Row(
                 children: [
                   Icon(Icons.trip_origin, color: Colors.blue[600], size: 20),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       trip['origin'] ?? 'Unknown',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -306,11 +308,11 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Icon(Icons.arrow_downward, color: Colors.grey[400], size: 20),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Container(
                       height: 2,
@@ -319,15 +321,15 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Icon(Icons.location_on, color: Colors.red[600], size: 20),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       trip['destination'] ?? 'Unknown',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -339,7 +341,7 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
               ),
               
               if (trip['description'] != null && trip['description'].toString().isNotEmpty) ...[
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Text(
                   trip['description'],
                   style: TextStyle(
@@ -351,19 +353,19 @@ class _BrowseTripsScreenState extends State<BrowseTripsScreen> {
                 ),
               ],
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // Date and Time
               Row(
                 children: [
                   Icon(Icons.calendar_today, size: 16, color: Colors.grey[600]),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     _formatDate(tripTime),
                     style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(
                     _formatTime(tripTime),
                     style: TextStyle(fontSize: 14, color: Colors.grey[700]),

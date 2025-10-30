@@ -10,7 +10,6 @@ class AuthService {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Register Admin
   Future<String?> registerAdmin({
     required String name,
     required String email,
@@ -23,7 +22,6 @@ class AuthService {
         password: password,
       );
 
-      // Create admin document
       await _firestore.collection('admins').doc(userCredential.user!.uid).set({
         'adminId': userCredential.user!.uid,
         'name': name,
@@ -33,7 +31,6 @@ class AuthService {
         'createdAt': DateTime.now().toIso8601String(),
       });
 
-      // Also create in users collection for authentication
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'name': name,
@@ -50,7 +47,6 @@ class AuthService {
     }
   }
 
-  // Register Traveler
   Future<String?> registerTraveler({
     required String name,
     required String email,
@@ -244,13 +240,15 @@ class AuthService {
 
 
 class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<auth.User?>(
       stream: auth.FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
@@ -259,7 +257,7 @@ class AuthWrapper extends StatelessWidget {
           return HomeScreen();
         }
         
-        return LoginScreen();
+        return const LoginScreen();
       },
     );
   }

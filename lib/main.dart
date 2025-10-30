@@ -10,33 +10,34 @@ import 'package:traveller/screens/share_location_screen.dart';
 import 'package:traveller/screens/trip_details_screen.dart';
 import 'package:traveller/services/auth.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Role-Based Auth App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AuthWrapper(),
+      home: const AuthWrapper(),
       routes: {
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
         '/home': (context) => HomeScreen(),
-        '/profile': (context) => ProfileScreen(),
+        '/profile': (context) => const ProfileScreen(),
         // Traveler routes
-        '/my-trips': (context) => MyTripsScreen(),
-        '/browse-trips': (context) => BrowseTripsScreen(),
-        '/share-location': (context) => ShareLocationScreen(),
+        '/my-trips': (context) => const MyTripsScreen(),
+        '/browse-trips': (context) => const BrowseTripsScreen(),
+        '/share-location': (context) => const ShareLocationScreen(),
       },
       onGenerateRoute: (settings) {
         // Handle routes with arguments

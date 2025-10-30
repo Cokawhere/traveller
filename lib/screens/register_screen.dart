@@ -4,6 +4,8 @@ import 'package:traveller/enums/user_enum.dart';
 import 'package:traveller/services/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }

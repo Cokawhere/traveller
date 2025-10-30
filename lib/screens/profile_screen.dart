@@ -6,6 +6,8 @@ import 'package:traveller/models/user_model.dart';
 import 'package:traveller/services/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -66,12 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (_isLoading || _user == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          title: const Text('Profile'),
           backgroundColor: Colors.white,
           foregroundColor: Colors.grey[800],
           elevation: 0,
         ),
-        body: Center(child: CircularProgressIndicator()),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -81,14 +83,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.grey[800],
         elevation: 0,
-        title: Text(
+        title: const Text(
           'My Profile',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         actions: [
           if (!_isEditing)
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: () {
                 setState(() {
                   _isEditing = true;
@@ -103,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Profile Header
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: _getRoleGradientColors(_user!.role),
@@ -122,25 +124,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     _user!.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       _getRoleDisplayName(_user!.role),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -151,11 +153,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
 
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Profile Form
             Padding(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -169,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.grey[800],
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Email (Read-only)
                     _buildTextField(
@@ -178,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       value: _user!.email,
                       enabled: false,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Name
                     _buildTextField(
@@ -193,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Phone
                     _buildTextField(
@@ -209,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Social Media (for Traveler and Companier)
                     if (_user!.role == UserRole.traveler || _user!.role == UserRole.companier) ...[
@@ -225,12 +227,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                     ],
 
                     // Traveler-specific fields
                     if (_user!.role == UserRole.traveler) ...[
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Text(
                         'Vehicle Information',
                         style: TextStyle(
@@ -239,7 +241,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       _buildTextField(
                         label: 'Years of Driving',
@@ -254,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       _buildTextField(
                         label: 'Car Name',
@@ -268,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       _buildTextField(
                         label: 'Car Model',
@@ -285,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
 
                     if (_isEditing) ...[
-                      SizedBox(height: 32),
+                      const SizedBox(height: 32),
                       Row(
                         children: [
                           Expanded(
@@ -297,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 _loadUserData(); // Reload original data
                               },
                               style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(vertical: 16),
                                 side: BorderSide(color: Colors.grey[400]!),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -313,19 +315,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: ElevatedButton(
                               onPressed: _isLoading ? null : _saveProfile,
                               style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(vertical: 16),
                                 backgroundColor: Colors.blue[600],
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                               child: _isLoading
-                                  ? SizedBox(
+                                  ? const SizedBox(
                                       height: 20,
                                       width: 20,
                                       child: CircularProgressIndicator(
@@ -333,7 +335,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         strokeWidth: 2,
                                       ),
                                     )
-                                  : Text(
+                                  : const Text(
                                       'Save Changes',
                                       style: TextStyle(
                                         fontSize: 16,
@@ -394,7 +396,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         filled: true,
         fillColor: enabled ? Colors.white : Colors.grey[100],
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }
@@ -463,7 +465,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Profile updated successfully!'),
+          content: const Text('Profile updated successfully!'),
           backgroundColor: Colors.green[600],
         ),
       );
