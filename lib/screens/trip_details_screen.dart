@@ -3,16 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-class TripDetailsScreen extends StatefulWidget {
+class TripDetailsScreenn extends StatefulWidget {
   final String tripId;
 
-  const TripDetailsScreen({super.key, required this.tripId});
+  const TripDetailsScreenn({super.key, required this.tripId});
 
   @override
   _TripDetailsScreenState createState() => _TripDetailsScreenState();
 }
 
-class _TripDetailsScreenState extends State<TripDetailsScreen> {
+class _TripDetailsScreenState extends State<TripDetailsScreenn> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override

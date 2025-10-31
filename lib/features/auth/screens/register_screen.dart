@@ -1,8 +1,6 @@
 // lib/screens/register_screen.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:traveller/enums/user_enum.dart';
-import 'package:traveller/routes.dart';
 import 'package:traveller/features/auth/services/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,22 +13,22 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _authService = AuthService();
-  
+
   // Common fields
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _phoneController = TextEditingController();
-  
+
   // Traveler & Companier fields
   final _socialMediaController = TextEditingController();
-  
+
   // Traveler specific fields
   final _yearsOfDrivingController = TextEditingController();
   final _carNameController = TextEditingController();
   final _carModelController = TextEditingController();
-  
+
   UserRole _selectedRole = UserRole.traveler;
   bool _isLoading = false;
 
@@ -130,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 16),
 
                     // Role-specific fields
-                    if (_selectedRole == UserRole.traveler || _selectedRole == UserRole.companier) ...[
+                    if (_selectedRole == UserRole.traveler ||
+                        _selectedRole == UserRole.companier) ...[
                       _buildTextField(
                         controller: _socialMediaController,
                         label: 'Social Media Handle',
@@ -236,10 +235,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           elevation: 2,
                         ),
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
                                 'Create Account',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
                               ),
                       ),
                     ),
@@ -260,7 +261,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-                      Get.back();
                     },
                     child: Text(
                       'Sign In',
@@ -308,15 +308,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Row(
             children: [
               Expanded(
-                child: _buildRoleChip(UserRole.admin, 'Admin', Icons.admin_panel_settings),
+                child: _buildRoleChip(
+                    UserRole.admin, 'Admin', Icons.admin_panel_settings),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _buildRoleChip(UserRole.traveler, 'Traveler', Icons.card_travel),
+                child: _buildRoleChip(
+                    UserRole.traveler, 'Traveler', Icons.card_travel),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _buildRoleChip(UserRole.companier, 'Companier', Icons.business),
+                child: _buildRoleChip(
+                    UserRole.companier, 'Companier', Icons.business),
               ),
             ],
           ),
@@ -394,7 +397,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
     );
   }
@@ -450,7 +454,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (error == null) {
       // Registration successful
       Navigator.pushReplacementNamed(context, '/home');
-      Get.offAllNamed(AppRoutes.home);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -475,4 +478,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 }
-                

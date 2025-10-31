@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:traveller/models/user_model.dart';
-import '../../../routes.dart';
-import '../../../screens/home_screen.dart' show HomeScreen;
+import '../../home/screens/home_screenn.dart';
 import '../screens/login_screen.dart';
 
 
@@ -88,7 +86,7 @@ class AuthService {
       });
 
       await userCredential.user!.updateDisplayName(name);
-      return null; // Success
+      return null; 
     } on auth.FirebaseAuthException catch (e) {
       return _handleAuthException(e);
     } catch (e) {
@@ -190,7 +188,6 @@ class AuthService {
       auth.User? user = _auth.currentUser;
       if (user == null) return null;
 
-      // First get the role from users collection
       DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
       if (!userDoc.exists) return null;
 
@@ -222,12 +219,10 @@ class AuthService {
     }
   }
 
-  // Get current user
   auth.User? getCurrentUser() {
     return _auth.currentUser;
   }
 
-  // Handle auth exceptions
   String _handleAuthException(auth.FirebaseAuthException e) {
     if (e.code == 'weak-password') {
       return 'The password provided is too weak.';
